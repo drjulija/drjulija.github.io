@@ -76,11 +76,11 @@ params:
   homeInfoParams:
     Title: "👋 Welcome to DrJulija's Notebook"
     Content: >
-      Hey, this is Julija. Engineer turned founder 
+      Hey, this is Julija. I'm engineer turned founder.
 
-      - 🤓 This notebook is for things I learn about AI/NLP
+      - 🤓 This notebook is for things I learn about Artificial Intelligence
 
-      - 🎓 I have a PhD in Computer Science from UCL
+      - 🎓 I have a PhD in Machine Learning & NLP from [UCL](https://www.ucl.ac.uk/)
 
       - 🛠 I lead engineering and product teams at [Networky.co](https://networky.events/)
 
@@ -93,9 +93,9 @@ params:
     - name: linkedin
       url: "https://www.linkedin.com/in/julija-bainiaksina-phd-a906764a/"
     - name: twitter
-      url: "https://twitter.com/drjulija"
-    - name: github
-      url: "https://github.com/drjulija"
+      url: "https://twitter.com/dr_julija"
+    #- name: github
+    #  url: "https://github.com/drjulija"
 
   analytics:
     google:
