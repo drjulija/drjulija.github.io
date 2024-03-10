@@ -1,6 +1,6 @@
 baseURL: https://drjulija.github.io/
 languageCode: en-us
-title: Dr Julija's Notebook
+title: DrJulija's Notebook
 paginate: 5
 theme: PaperMod
 
@@ -20,7 +20,7 @@ params:
   title: ExampleSite
   description: "ExampleSite description"
   keywords: [Blog, Portfolio, PaperMod]
-  author: Me
+  author: Dr Julija
   # author: ["Me", "You"] # multiple authors
   images: ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat: "January 2, 2006"
@@ -53,7 +53,7 @@ params:
     safari_pinned_tab: "<link / abs url>"
 
   label:
-    text: "Dr Julija's Notebook"
+    text: "DrJulija's Notebook"
     icon: apple-touch-icon.png
     iconHeight: 35
 
@@ -74,25 +74,28 @@ params:
 
   # home-info mode
   homeInfoParams:
-    Title: "Welcome to my Notebook 📔"
+    Title: "👋 Welcome to DrJulija's Notebook"
     Content: >
-      👋 Hi, I’m Julija. I keep my learning notes here
+      Hey, this is Julija. Engineer turned founder 
 
-      - Hello
+      - 🤓 This notebook is for things I learn about AI/NLP
 
-      - Hello 
+      - 🎓 I have a PhD in Computer Science from UCL
 
+      - 🛠 I lead engineering and product teams at [Networky.co](https://networky.events/)
+
+      - Get in touch with me 💌
     
 
   socialIcons:
     - name: email
       url: 'mailto:itsdrjulija@gmail.com'
     - name: linkedin
-      url: "https://github.com/"
+      url: "https://www.linkedin.com/in/julija-bainiaksina-phd-a906764a/"
     - name: twitter
       url: "https://twitter.com/drjulija"
     - name: github
-      url: "https://github.com/"
+      url: "https://github.com/drjulija"
 
   analytics:
     google:
@@ -103,9 +106,9 @@ params:
       SiteVerificationTag: "XYZabc"
 
   cover:
-    hidden: true # hide everywhere but not in structured data
-    hiddenInList: true # hide on list pages and home
-    hiddenInSingle: true # hide on single page
+    hidden: false # hide everywhere but not in structured data
+    hiddenInList: false # hide on list pages and home
+    hiddenInSingle: false # hide on single page
 
   editPost:
     URL: "https://github.com/<path_to_repo>/content"
@@ -137,8 +140,8 @@ menu:
       url: /tags/
       weight: 30
     - identifier: example
-      name: example.org
-      url: https://example.org
+      name: networky.co
+      url: https://networky.events/
       weight: 40
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
