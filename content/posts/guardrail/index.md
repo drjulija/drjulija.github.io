@@ -10,7 +10,7 @@ author: ["Dr Julija"]
 cover:
     image: "/posts/guardrail/images/toxic-cover.png"  # image path/url
     alt: "Hello" # alt text
-    caption: "BAre LLM-based toxic content classifiers always better than old-school machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
+    caption: "Let's investigate if LLM-based toxic content classifiers always better than old-school machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
 ---
 
@@ -52,3 +52,86 @@ Depending on the application, guardrails can be customized to block various type
 Llama Guard is a fine-tuned model that takes both input and output from an LLM and categorizes them based on user-specified criteria. While useful, its reliability can vary, as classification depends on the LLM’s understanding of the categories and predictive accuracy.
 
 {{< figure src="/posts/guardrails/images/LlamaGuard.png" attr="Llama Guard Framework overview ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
+
+
+**2. Nvidia NeMo** ([Rebedea et al., 2023](https://aclanthology.org/2023.emnlp-demo.40.pdf))
+
+NeMo serves as an intermediary layer to enhance control and safety in LLM applications. When a customer’s prompt is received, NeMo converts it into an embedding vector, then applies a K-nearest neighbors (KNN) approach to match it with stored vectors representing standard user inputs (canonical forms). This retrieves the embeddings most similar to the prompt, which NeMo uses to guide output generation from the corresponding canonical form. Throughout this process, NeMo can use the LLM to produce safe responses as specified by the Colang program. Additionally, NeMo includes pre-built moderation tools, such as fact-checking, hallucination prevention, and content moderation, to further safeguard outputs.
+
+{{< figure src="/posts/guardrails/images/nemo.png" attr="Nvidia Nemo Guardrails Framework ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
+
+
+## Objective
+The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy.
+
+## Methodology
+I evaluated the performance of three binary classifiers:
+1. Llama3 7B with in-context-learning (ICL)
+2. Llama Guard 3 7B 
+3. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
+
+### Dataset
+In this experiment, I used the [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) dataset, which includes toxic comments and hate speech from Wikipedia, with each comment labeled by humans as either 1 ("toxic") or 0 ("safe").
+
+To support training, validation, and testing, I divided the dataset into three balanced subsets:
+1. Training Dataset - 25,868 samples
+2. Validation Dataset - 6,582 samples
+3. Test Dataset - 3,000 samples
+
+The training and validation datasets were used to train a neural network classifier. For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
+
+For evaluating the performance of all three classifiers, I used Test dataset.
+
+### Classifiers
+
+For the experiment, I set up 3 different classifiers: 
+
+
+#### Llama3 7B with ICL
+I used Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know it should return 2. I use similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of a prompt.
+
+
+```python
+"""
+Task: Check if there is toxic content in 'User' comment according to our toxic content categories below. 
+               
+<BEGIN TOXIC CONTENT CATEGORIES>
+Violence and Hate
+Sexual Content
+Guns & Illegal Weapons
+Regulated or Controlled Substances
+Suicide and Self Harm
+Criminal Planning 
+<END TOXIC CONTENT CATEGORIES>
+               
+<BEGIN USER COMMENT>
+{USER_COMMENT}
+<END USER COMMENT>
+               
+Provide your safety assesment for the above user comment. 
+Only provide a single number:
+1 if user comment is "Toxic" or 
+0 if user comment is "Safe" 
+Do not provide explanation or justification. If you can not provide the answer output number 2. You are not allowed to output non numeric answer. You can only output 0, 1 or 2."""
+```
+<!---
+#### Llama Guard 3 7B
+I used Llama Guard 3 model to classify toxic content using Test Dataset. Because Llama Guard is already fine-tuned to perform a classification task, I did not provide any prompt to the model. Llama Guard outputs "safe" for non-toxic content or "unsafe" for toxic content together with representing category (refer to the [paper](https://arxiv.org/pdf/2312.06674) for more details).
+-->
+
+#### Feed-forward Neural Network
+I train a simple 2 layer neural network with the following architecture:
+- Input layer: 1024
+- Hidden layer 1: 100
+- Hidden layer 2 (with dropout): 25
+- Output: 2
+
+I use Cross Entropy Loss and Stochastic Gradient Descent optimizaton. 
+
+Below figure shows the training and validation loss for each epoch during training.
+
+{{< figure src="/posts/guardrails/images/nn_1024_100_25_loss.png" attr="Training and validation loss during Neural Network training" align=center target="_blank" >}}
+
+After the training, the performance of the neural network was evaluated on Test Dataset.
+
+Full code is accessible here.
