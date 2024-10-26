@@ -138,7 +138,7 @@ Full code is accessible here.
 ## Evaluation
 
 Here is the most interesting part.
-{{< figure src="/posts/guardrails/images/shock.gif" align=center target="_blank" >}}
+{{< figure src="/posts/guardrails/images/nemo.png" align=center target="_blank" >}}
 
 
 
