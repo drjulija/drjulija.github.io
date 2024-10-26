@@ -135,3 +135,30 @@ Below figure shows the training and validation loss for each epoch during traini
 After the training, the performance of the neural network was evaluated on Test Dataset.
 
 Full code is accessible here.
+
+## Evaluation
+
+Here is the most interesting part.
+
+{{< figure src="/posts/guardrails/images/shock.gif" align=center target="_blank" >}}
+
+
+**Llama3 7B with ICL**
+The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. Below is the summary of the model perfomance.
+- Accuracy Score:  0.8
+- Precision:  0.82
+- Recall:  0.78
+- F1 Score:  0.8
+
+**Feed-forward Neural Network**
+
+
+As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly.
+
+## Limitations
+
+
+## Conclusion
+
+## 🔗 Code
+Can be found here
