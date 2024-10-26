@@ -74,6 +74,9 @@ Llama Guard is a fine-tuned model that takes both input and output from an LLM a
 
 NeMo serves as an intermediary layer to enhance control and safety in LLM applications. When a customer’s prompt is received, NeMo converts it into an embedding vector, then applies a K-nearest neighbors (KNN) approach to match it with stored vectors representing standard user inputs (canonical forms). This retrieves the embeddings most similar to the prompt, which NeMo uses to guide output generation from the corresponding canonical form. Throughout this process, NeMo can use the LLM to produce safe responses as specified by the Colang program. Additionally, NeMo includes pre-built moderation tools, such as fact-checking, hallucination prevention, and content moderation, to further safeguard outputs.
 
+{{< figure src="/posts/toxic-content-classifier/images/nemo.png" attr="Nvidia Nemo Guardrails Framework ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
+
+
 ## Objective
 The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy.
 
@@ -81,7 +84,7 @@ The goal of this work was to examine whether LLM-based toxic content classifiers
 I evaluated the performance of three binary classifiers:
 1. Llama3 7B with in-context-learning (ICL)
 2. Llama Guard 3 7B 
-3. A feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
+3. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
 
 ### Dataset
 In this experiment, I used the [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) dataset, which includes toxic comments and hate speech from Wikipedia, with each comment labeled by humans as either 1 ("toxic") or 0 ("safe").
@@ -143,8 +146,17 @@ Below figure shows the training and validation loss for each epoch during traini
 
 {{< figure src="/posts/toxic-content-classifier/images/nn_1024_100_25_loss.png" attr="Training and validation loss during Neural Network training" align=center target="_blank" >}}
 
+After the training, the performance of the neural network was evaluated on Test Dataset.
+
 Full code is accessible here.
 
+## Evaluation
 
-### 🔗 Code
+
+## Limitations
+
+
+## Conclution
+
+## 🔗 Code
 Can be found here
