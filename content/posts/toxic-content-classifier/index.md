@@ -10,14 +10,14 @@ author: ["Dr Julija"]
 ShowToc: true #table of content
 TocOpen: true #table of content open by default
 cover:
-    image: "/posts/toxic-content-classifier/images/toxic-cover.png"  # image path/url
+    image: "/posts/toxic-content-classifier/images/LlamaGuard.png"  # image path/url
     alt: "Hello" # alt text
     caption: "Are LLM-based toxic content classifiers always better than "old-school" machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
 ---
 
 note: (CTRL + Shift + V)
-
+"/posts/rag/images/rag-evolution-sketch.png" 
 
 Plan
 1. Overview - the goal of this work and what i found
@@ -154,6 +154,8 @@ Full code is accessible here.
 
 Here is the most interesting part.
 {{< figure src="/posts/toxic-content-classifier/images/shock.gif" align=center target="_blank" >}}
+
+
 
 ## Limitations
 
