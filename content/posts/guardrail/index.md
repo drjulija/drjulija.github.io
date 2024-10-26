@@ -1,5 +1,5 @@
 ---
-title: "How I Built Toxic Content Classifiers for LLM Guardrails"
+title: "LLM Guardrails: How I Built Toxic Content Classifier"
 summary: "In this post I compare two classifiers that I built for toxic content classification: LLM-based classifier and Feed Forward Neural Network classifier. I found surprising results."
 date: 2024-10-07
 series: ["Guardrail"]
@@ -144,13 +144,22 @@ Here is the most interesting part.
 
 
 **Llama3 7B with ICL**
-The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. Below is the summary of the model perfomance.
+The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. To classify 3,000 test samples it took me more than an hour. 
+
+Below is the summary of the model perfomance:
 - Accuracy Score:  0.8
 - Precision:  0.82
 - Recall:  0.78
 - F1 Score:  0.8
 
 **Feed-forward Neural Network**
+Neural network classified all 3,000 test samples and it took a few minutes.
+
+Below is the summary of the model perfomance:
+Accuracy Score:  0.9
+Precision:  0.86
+Recall:  0.96
+F1 Score:  0.91
 
 
 As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly.
