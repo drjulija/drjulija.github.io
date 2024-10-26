@@ -1,11 +1,11 @@
 ---
-title: "Hello"
-summary: "Read about what is RAG and how to set up a Basic RAG Pipeline using Langchain, OpenAI LLM and ChromaDB. Sample code included."
-date: 2024-01-07
+title: "How I Built Toxic Content Classifiers for LLM Guardrails"
+summary: "In this post I compare two classifiers that I built for toxic content classification: LLM-based classifier and Feed Forward Neural Network classifier. I found surprising results."
+date: 2024-10-07
 series: ["Guardrail"]
 weight: 1
 aliases: ["/guardrail"]
-tags: ["RAG", "LLMs", "Langchain", "OpenAI", "LlamaIndex", "ChromaDB"]
+tags: ["Guardrail", "LLMs"]
 author: ["Dr Julija"]
 cover:
     image: "/posts/guardrail/images/toxic-cover.png"  # image path/url
@@ -29,3 +29,26 @@ In both approaches, LLMs are central to determining what qualifies as toxic cont
 🤔 This made me wonder: do LLM-based toxic content classifiers truly outperform traditional neural network classifiers in accuracy?
 
 The results were surprising!
+
+
+## Background
+This section provides an overview of Guardrails, their purpose, and current implementations.
+
+### What are Guardrails?
+Guardrails are filtering mechanisms in LLM-based applications that safeguard against generating toxic, harmful, or otherwise undesired content. They act as essential tools to mitigate risks associated with LLM use, such as ethical concerns, data biases, privacy issues, and overall robustness.
+
+As LLMs become more widespread, the potential for misuse has grown, with risks ranging from spreading misinformation to facilitating criminal activities [Goldstein et al., 2023](https://arxiv.org/pdf/2301.04246).
+
+In simple terms, a guardrail is an algorithm that reviews the inputs and outputs of LLMs and determines whether they meet safety standards.
+
+For example, if a user’s input relates to child exploitation, a guardrail could either prevent the input from being processed by the LLM or adapt the output to ensure it remains harmless. In this way, guardrails intercept potentially harmful queries and help prevent models from responding inappropriately.
+
+Depending on the application, guardrails can be customized to block various types of content, including offensive language, hate speech, hallucinations, or areas of high uncertainty. They also help ensure compliance with ethical guidelines and specific policies, such as fairness, privacy, or copyright protections [Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1).
+
+**Examples of Open-Source Guardrail Frameworks**
+
+**1. Lama Guard** ([Inan et al., 2023](https://arxiv.org/pdf/2312.06674))
+
+Llama Guard is a fine-tuned model that takes both input and output from an LLM and categorizes them based on user-specified criteria. While useful, its reliability can vary, as classification depends on the LLM’s understanding of the categories and predictive accuracy.
+
+{{< figure src="/posts/guardrails/images/LlamaGuard.png" attr="Llama Guard Framework overview ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
