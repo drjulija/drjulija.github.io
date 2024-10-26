@@ -10,9 +10,9 @@ author: ["Dr Julija"]
 ShowToc: true #table of content
 TocOpen: true #table of content open by default
 cover:
-    image: "/posts/rag/images/rag-evolution-sketch.png"  # image path/url
+    image: "/posts/rag/images/toxic-cover.png"  # image path/url
     alt: "Hello" # alt text
-    caption: "Three RAG Paradigms | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
+    caption: "Are LLM-based toxic content classifiers always better than "old-school" machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
 ---
 
