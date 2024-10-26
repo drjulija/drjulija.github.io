@@ -5,12 +5,12 @@ date: 2024-10-07
 series: ["Guardrail"]
 weight: 1
 aliases: ["/guardrail"]
-tags: ["Guardrail", "LLMs"]
+tags: ["Guardrail", "LLMs", "Llama3", "LlamaGuard"]
 author: ["Dr Julija"]
 cover:
     image: "/posts/guardrail/images/toxic-cover.png"  # image path/url
     alt: "Hello" # alt text
-    caption: "Basic Rag Pipeline | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
+    caption: "BAre LLM-based toxic content classifiers always better than old-school machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
 ---
 
