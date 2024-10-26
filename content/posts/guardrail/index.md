@@ -51,14 +51,14 @@ Depending on the application, guardrails can be customized to block various type
 
 Llama Guard is a fine-tuned model that takes both input and output from an LLM and categorizes them based on user-specified criteria. While useful, its reliability can vary, as classification depends on the LLM’s understanding of the categories and predictive accuracy.
 
-{{< figure src="/posts/guardrails/images/LlamaGuard.png" attr="Llama Guard Framework overview ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
+{{< figure src="/posts/guardrail/images/LlamaGuard.png" attr="Llama Guard Framework overview ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
 
 
 **2. Nvidia NeMo** ([Rebedea et al., 2023](https://aclanthology.org/2023.emnlp-demo.40.pdf))
 
 NeMo serves as an intermediary layer to enhance control and safety in LLM applications. When a customer’s prompt is received, NeMo converts it into an embedding vector, then applies a K-nearest neighbors (KNN) approach to match it with stored vectors representing standard user inputs (canonical forms). This retrieves the embeddings most similar to the prompt, which NeMo uses to guide output generation from the corresponding canonical form. Throughout this process, NeMo can use the LLM to produce safe responses as specified by the Colang program. Additionally, NeMo includes pre-built moderation tools, such as fact-checking, hallucination prevention, and content moderation, to further safeguard outputs.
 
-{{< figure src="/posts/guardrails/images/nemo.png" attr="Nvidia Nemo Guardrails Framework ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
+{{< figure src="/posts/guardrail/images/nemo.png" attr="Nvidia Nemo Guardrails Framework ([Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1))" align=center target="_blank" >}}
 
 
 ## Objective
@@ -130,7 +130,7 @@ I use Cross Entropy Loss and Stochastic Gradient Descent optimizaton.
 
 Below figure shows the training and validation loss for each epoch during training.
 
-{{< figure src="/posts/guardrails/images/nn_1024_100_25_loss.png" attr="Training and validation loss during Neural Network training" align=center target="_blank" >}}
+{{< figure src="/posts/guardrail/images/nn_1024_100_25_loss.png" attr="Training and validation loss during Neural Network training" align=center target="_blank" >}}
 
 After the training, the performance of the neural network was evaluated on Test Dataset.
 
@@ -140,7 +140,7 @@ Full code is accessible here.
 
 Here is the most interesting part.
 
-{{< figure src="/posts/guardrails/images/shock.gif" align=center target="_blank" >}}
+{{< figure src="/posts/guardrail/images/shock.gif" align=center target="_blank" >}}
 
 
 **Llama3 7B with ICL**
