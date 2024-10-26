@@ -4,13 +4,13 @@ summary: "In this post I compare two classifiers that I built for toxic content 
 date: 2024-09-25
 series: ["Classifier"]
 weight: 1
-aliases: ["/toxic-content-classifier-for-llm-guadrails"]
+aliases: ["/toxic-content-classifier"]
 tags: ["Neural Network", "LLMs", "Supervised Learning", "Toxic Content Classification", "Guardrails"]
 author: ["Dr Julija"]
 ShowToc: true #table of content
 TocOpen: true #table of content open by default
 cover:
-    image: "/posts/rag/images/rag-evolution-sketch.png" 
+    image: "/posts//toxic-content-classifier/images/toxic-cover.png" 
     alt: "Hello" # alt text
     caption: "Are LLM-based toxic content classifiers always better than "old-school" machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
@@ -103,6 +103,7 @@ For evaluating the performance of all three classifiers, I used Test dataset.
 
 For the experiment, I set up 3 different classifiers: 
 
+
 #### Llama3 7B with ICL
 I used Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know it should return 2. I use similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of a prompt.
 
@@ -130,9 +131,10 @@ Only provide a single number:
 0 if user comment is "Safe" 
 Do not provide explanation or justification. If you can not provide the answer output number 2. You are not allowed to output non numeric answer. You can only output 0, 1 or 2."""
 ```
-
+<!---
 #### Llama Guard 3 7B
 I used Llama Guard 3 model to classify toxic content using Test Dataset. Because Llama Guard is already fine-tuned to perform a classification task, I did not provide any prompt to the model. Llama Guard outputs "safe" for non-toxic content or "unsafe" for toxic content together with representing category (refer to the [paper](https://arxiv.org/pdf/2312.06674) for more details).
+-->
 
 #### Feed-forward Neural Network
 I train a simple 2 layer neural network with the following architecture:
