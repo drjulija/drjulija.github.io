@@ -2,7 +2,7 @@
 title: "Hello"
 summary: "Read about what is RAG and how to set up a Basic RAG Pipeline using Langchain, OpenAI LLM and ChromaDB. Sample code included."
 date: 2024-01-07
-series: ["RAG"]
+series: ["Guardrail"]
 weight: 1
 aliases: ["/guardrail"]
 tags: ["RAG", "LLMs", "Langchain", "OpenAI", "LlamaIndex", "ChromaDB"]
