@@ -67,8 +67,7 @@ The goal of this work was to examine whether LLM-based toxic content classifiers
 ## Methodology
 I evaluated the performance of three binary classifiers:
 1. Llama3 8B with in-context-learning (ICL)
-2. GPT 3.5 Turbo with in-context-learning (ICL)
-3. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
+2. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
 
 ### Dataset
 For this experiment, I used the [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) dataset, which includes toxic comments and hate speech from Wikipedia, with each comment labeled by humans as either 1 ("toxic") or 0 ("safe").
@@ -116,11 +115,11 @@ Do not provide explanation or justification. If you can not provide the answer o
 <!---
 #### Llama Guard 3 7B
 I used Llama Guard 3 model to classify toxic content using Test Dataset. Because Llama Guard is already fine-tuned to perform a classification task, I did not provide any prompt to the model. Llama Guard outputs "safe" for non-toxic content or "unsafe" for toxic content together with representing category (refer to the [paper](https://arxiv.org/pdf/2312.06674) for more details).
--->
+
 
 #### GPT 3.5 Turbo with ICL
 I used OpenAI's GPT 3.5 Turbo model to classify toxic content using Test Dataset. Same as per above, I used in-context-learning technique where LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used the same prompt (see above) in both Llama3 and GPT 3.5 classifiers.
-
+-->
 
 #### Feed-forward Neural Network
 I train a simple 2 layer neural network with the following architecture:
@@ -195,19 +194,38 @@ Below is the summary of the model perfomance:
 - Recall:  0.96
 - F1 Score:  0.91
 
-As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly. Below, are confusion matrices for both classifiers. 
 
 <!---
 ![alt-text-1](/posts/guardrail/images/cm.png "title-1")
 -->
 
+Below, are confusion matrices for both classifiers. 
+
 {{< figure src="/posts/guardrail/images/cm.png" attr="Confusion matrices" align=center target="_blank" >}}
 
+In this scenario, the neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. 
+
+For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network—with a recall rate of 0.96—would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
+
+Additionally, in a production environment, the neural network would offer faster processing speeds, taking less than a second per request, whereas the LLM requires approximately 2-3 seconds for each classification.
+
+However, it is worth noting that the neural network may not generalize as effectively to novel, unseen content, where the LLM could potentially offer an advantage.
+
+
 ## Limitations and next steps
-To run Llama3.1 8B model I used Ollama framework, which is a lightweight framework for running LLMs on a local machine. Due to quantization, the model performance may have been significantly impacted. My next step is to run the same experiment with the full Llama3.1 model using AWS Bedrock. In addition, I plan to run the same experiment with LlamaGuard model.
+To implement the Llama3.1 8B model, I utilized the Ollama framework, a streamlined tool for running LLMs on local machines. Due to quantization, model performance may have been significantly affected. The next phase involves conducting the same experiment with the full Llama3.1 model on AWS Bedrock. Additionally, I plan to test the LlamaGuard model under similar conditions.
+
+For further refinement, the neural network could be trained on a broader range of toxic content types, and alternative architectures and embedding models could be explored.
+
+An additional experiment using OpenAI’s GPT-3.5 API was attempted; however, after approximately 200 requests, the API returned an error citing "repetitive patterns in the prompt."
+
 
 ## Conclusion
+This study compared the performance of a large language model (Llama3 8B with in-context learning) and a traditional two layer neural network classifier for detecting toxic content. Results indicate that the feed-forward neural network significantly outperformed the LLM-based classifier across key metrics, achieving an accuracy score of 0.9 and a recall rate of 0.96, while the LLM-based classifier achieved an accuracy of 0.8 and a recall of 0.78. Furthermore, the neural network demonstrated faster inference times, making it a more suitable choice for real-time or high-volume production environments.
 
+These findings highlight that for tasks requiring high recall in content moderation, traditional neural network classifiers may provide superior performance with a reduced computational burden. However, the neural network may be less capable of handling novel or more nuanced toxic content, where the LLM’s generalization capabilities could provide an advantage.
+
+Future work will involve testing a non-quantized version of Llama3.1 on AWS Bedrock to assess any improvements in performance. Additionally, exploring the LlamaGuard model and experimenting with more diverse training data and alternative architectures will help refine the neural network classifier further. 
 
 ## 🔗 Code
 Can be found here
