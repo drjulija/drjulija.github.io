@@ -1,5 +1,5 @@
 ---
-title: "LLM Guardrails: How I Built Toxic Content Classifier"
+title: "LLM Guardrails: How I Built a Toxic Content Classifier"
 summary: "In this post I compare two classifiers that I built for toxic content classification: LLM-based classifier and Feed Forward Neural Network classifier. I found surprising results."
 date: 2024-10-07
 series: ["Guardrail"]
@@ -171,26 +171,17 @@ Here is the most interesting part.
 
 {{< figure src="/posts/guardrail/images/shock.gif" align=center target="_blank" >}}
 
+The neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. To classify 3,000 test samples it took me more than an hour. Neural network classified all 3,000 test samples and it took a few minutes. 
 
-**Llama3 7B with ICL**
+See the table summary below:
 
-The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. To classify 3,000 test samples it took me more than an hour. 
-
-Below is the summary of the model perfomance:
-- Accuracy Score:  0.8
-- Precision:  0.82
-- Recall:  0.78
-- F1 Score:  0.8
-
-**Feed-forward Neural Network**
-
-Neural network classified all 3,000 test samples and it took a few minutes.
-
-Below is the summary of the model perfomance:
-- Accuracy Score:  0.9
-- Precision:  0.86
-- Recall:  0.96
-- F1 Score:  0.91
+| Metric     | **Llama3 7B with ICL**   | **Neural Network**   |
+| :--------- | :----------------------: | :------------------: |
+| **Accuracy**   | 0.8                      | 0.9                  |
+| **Precision**  | 0.82                     | 0.86                 |
+| **Recall**     | 0.78                     | 0.96                 |
+| **F1 Score**   | 0.8                      | 0.91                 | 
+| **Time (sec)**       | 4080                 | 2.2              |
 
 
 <!---
@@ -200,18 +191,6 @@ Below is the summary of the model perfomance:
 Below, are confusion matrices for both classifiers. 
 
 {{< figure src="/posts/guardrail/images/cm.png" attr="Confusion matrices" align=center target="_blank" >}}
-
-
-In this scenario, the neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. See the table summary below:
-
-
-| Metric     | **Llama3 7B with ICL**   | **Neural Network**   |
-| :--------- | :----------------------: | :------------------: |
-| Accuracy   | 0.8                      | 0.9                  |
-| Precision  | 0.82                     | 0.86                 |
-| Recall     | 0.78                     | 0.96                 |
-| F1 Score   | 0.8                      | 0.91                 | 
-| Time       | 4080 sec                 | 2.2 sec              |
 
 
 For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network with a recall rate of 0.96 would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
