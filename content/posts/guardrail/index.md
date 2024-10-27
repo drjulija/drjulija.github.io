@@ -167,8 +167,11 @@ Below is the summary of the model perfomance:
 
 As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly. Below, are confusion matrices for both classifiers. 
 
-![alt-text-1](/posts/guardrail/images/llama3cm.png "title-1") ![alt-text-2](/posts/guardrail/images/nncm.png "title-2")
+<!---
+![alt-text-1](/posts/guardrail/images/cm.png "title-1")
+-->
 
+{{< figure src="/posts/guardrail/images/cm.png" attr="Confusion matrices" align=center target="_blank" >}}
 
 ## Limitations and next steps
 To run Llama3.1 8B model I used Ollama framework, which is a lightweight framework for running LLMs on a local machine. Due to quantization, the model performance may have been significantly impacted. My next step is to run the same experiment with the full Llama3.1 model using AWS Bedrock. In addition, I plan to run the same experiment with LlamaGuard model.
