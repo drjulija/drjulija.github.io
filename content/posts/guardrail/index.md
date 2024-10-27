@@ -26,7 +26,7 @@ In both approaches, LLMs are central to determining what qualifies as toxic cont
 1. Reliability – LLMs are not deterministic, meaning they can produce different outputs for the same input, which may impact consistency.
 2. Efficiency – Deploying an LLM-based toxic content classifier in production can be costly and slow. For instance, using such classifier could add a delay of 2–4 seconds before displaying the final output to the end-user. This might negatively impact the end-user experience.
 
-🤔 This made me wonder: do LLM-based toxic content classifiers truly outperform traditional neural network classifiers in accuracy?
+🤔 This made me wonder: **Do LLM-based toxic content classifiers truly outperform traditional neural network classifiers in accuracy enough to justify sacrificing speed?**
 
 The results were surprising!
 
@@ -201,11 +201,22 @@ Below, are confusion matrices for both classifiers.
 
 {{< figure src="/posts/guardrail/images/cm.png" attr="Confusion matrices" align=center target="_blank" >}}
 
-In this scenario, the neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. 
 
-For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network—with a recall rate of 0.96—would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
+In this scenario, the neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. See the table summary below:
 
-Additionally, in a production environment, the neural network would offer faster processing speeds, taking less than a second per request, whereas the LLM requires approximately 2-3 seconds for each classification.
+
+| Metric    | **Llama3 7B with ICL** | **Neural Network** |
+| --------- | ---------------------- | ------------------ |
+| Accuracy  | 0.8                    | 0.9                |
+| Precision | 0.82                   | 0.86               |
+| Recall    | 0.78                   | 0.96               |
+| F1 Score  | 0.8                    | 0.91               | 
+| Time      | 4080 sec               | 2.2 sec            |
+
+
+For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network with a recall rate of 0.96 would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
+
+When it comes to the speed, neural network took only 2.2 seconds to classify all 3,000 test samples, meanwhile LLM-based classifier took 4080 seconds. This is very important to consider when deploying such guardrails in a production environment. The neural network would offer faster processing speeds, taking a few mili-seconds per request, whereas the LLM requires approximately 2-3 seconds for each classification. 
 
 However, it is worth noting that the neural network may not generalize as effectively to novel, unseen content, where the LLM could potentially offer an advantage.
 
@@ -219,7 +230,11 @@ An additional experiment using OpenAI’s GPT-3.5 API was attempted; however, af
 
 
 ## Conclusion
-This study compared the performance of a large language model (Llama3 8B with in-context learning) and a traditional two layer neural network classifier for detecting toxic content. Results indicate that the feed-forward neural network significantly outperformed the LLM-based classifier across key metrics, achieving an accuracy score of 0.9 and a recall rate of 0.96, while the LLM-based classifier achieved an accuracy of 0.8 and a recall of 0.78. Furthermore, the neural network demonstrated faster inference times, making it a more suitable choice for real-time or high-volume production environments.
+The objective of this experiment was to assess whether LLM-based toxic content classifiers offer advantages in accuracy and efficiency over traditional machine learning models, such as neural networks.
+
+This study compared the performance of a large language model (Llama3 8B with in-context learning) and a traditional two layer neural network classifier for detecting toxic content. Results indicate that the feed-forward neural network significantly outperformed the LLM-based classifier across key metrics, achieving an accuracy score of 0.9 and a recall rate of 0.96, while the LLM-based classifier achieved an accuracy of 0.8 and a recall of 0.78. 
+
+Furthermore, the neural network demonstrated faster inference times, making it a more suitable choice for real-time or high-volume production environments.
 
 These findings highlight that for tasks requiring high recall in content moderation, traditional neural network classifiers may provide superior performance with a reduced computational burden. However, the neural network may be less capable of handling novel or more nuanced toxic content, where the LLM’s generalization capabilities could provide an advantage.
 
