@@ -146,6 +146,7 @@ Here is the most interesting part.
 
 
 **Llama3 7B with ICL**
+
 The LLM failed to classify 146 samples. I updated their labels to 1 assuming that we want a model with high recall score. To classify 3,000 test samples it took me more than an hour. 
 
 Below is the summary of the model perfomance:
@@ -155,6 +156,7 @@ Below is the summary of the model perfomance:
 - F1 Score:  0.8
 
 **Feed-forward Neural Network**
+
 Neural network classified all 3,000 test samples and it took a few minutes.
 
 Below is the summary of the model perfomance:
@@ -165,11 +167,11 @@ Below is the summary of the model perfomance:
 
 As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly. Below, are confusion matrices for both classifiers. 
 
-![alt-text-1](/posts/guardrail/images/nn_1024_100_25_loss.png "title-1") ![alt-text-2](/posts/guardrail/images/nn_1024_100_25_loss.png "title-2")
+![alt-text-1](/posts/guardrail/images/llama3cm.png "title-1") ![alt-text-2](/posts/guardrail/images/nncm.png "title-2")
 
 
 ## Limitations and next steps
-To run Llama3.1 8B model I used Ollama framework, which is a lightweight framework for running LLMs on the local machine. Due to quantization, the model performance may have been significantly impacted. My next step is to run the same experiment with the full Llama3.1 model using AWS Bedrock. In addition, I plan to run the same experiment with LlamaGuard model.
+To run Llama3.1 8B model I used Ollama framework, which is a lightweight framework for running LLMs on a local machine. Due to quantization, the model performance may have been significantly impacted. My next step is to run the same experiment with the full Llama3.1 model using AWS Bedrock. In addition, I plan to run the same experiment with LlamaGuard model.
 
 ## Conclusion
 
