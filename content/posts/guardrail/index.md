@@ -5,12 +5,12 @@ date: 2024-10-07
 series: ["Guardrail"]
 weight: 1
 aliases: ["/guardrail"]
-tags: ["Guardrail", "LLMs", "Llama3", "LlamaGuard"]
+tags: ["Guardrails", "LLMs", "Llama3", "LlamaGuard"]
 author: ["Dr Julija"]
 cover:
     image: "/posts/guardrail/images/toxic-cover.png"  # image path/url
     alt: "Hello" # alt text
-    caption: "Let's investigate if LLM-based toxic content classifiers always better than old-school machine learning methods? | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
+    caption: "Let's investigate if LLM-based toxic content classifiers are always better than old-school machine learning methods | 📔 DrJulija's Notebook | Follow my [Medium Blog](https://medium.com/p/938e4f6e03d1)" # display caption under cover
     relative: false # when using page bundles set this to true
 ---
 
@@ -62,33 +62,32 @@ NeMo serves as an intermediary layer to enhance control and safety in LLM applic
 
 
 ## Objective
-The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy.
+The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy and by how much.
 
 ## Methodology
 I evaluated the performance of three binary classifiers:
-1. Llama3 7B with in-context-learning (ICL)
+1. Llama3 8B with in-context-learning (ICL)
 2. Llama Guard 3 7B 
 3. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
 
 ### Dataset
-In this experiment, I used the [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) dataset, which includes toxic comments and hate speech from Wikipedia, with each comment labeled by humans as either 1 ("toxic") or 0 ("safe").
+For this experiment, I used the [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) dataset, which includes toxic comments and hate speech from Wikipedia, with each comment labeled by humans as either 1 ("toxic") or 0 ("safe").
 
-To support training, validation, and testing, I divided the dataset into three balanced subsets:
+To support training, validation, and testing, I divided the dataset into three balanced subsets that contains equal number of samples for each category 0 or 1:
 1. Training Dataset - 25,868 samples
 2. Validation Dataset - 6,582 samples
 3. Test Dataset - 3,000 samples
 
-The training and validation datasets were used to train a neural network classifier. For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
+The training and validation datasets were used to train a neural network classifier.
 
-For evaluating the performance of all three classifiers, I used Test dataset.
+For evaluating the performance of all three classifiers, I used the Test dataset.
 
 ### Classifiers
 
 For the experiment, I set up 3 different classifiers: 
 
-
-#### Llama3 7B with ICL
-I used Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know it should return 2. I use similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of a prompt.
+#### Llama3 8B with ICL
+I used Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such prompt.
 
 
 ```python
@@ -126,6 +125,9 @@ I train a simple 2 layer neural network with the following architecture:
 - Hidden layer 2 (with dropout): 25
 - Output: 2
 
+ For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
+
+
 I use Cross Entropy Loss and Stochastic Gradient Descent optimizaton. 
 
 Below figure shows the training and validation loss for each epoch during training.
@@ -156,18 +158,21 @@ Below is the summary of the model perfomance:
 Neural network classified all 3,000 test samples and it took a few minutes.
 
 Below is the summary of the model perfomance:
-Accuracy Score:  0.9
-Precision:  0.86
-Recall:  0.96
-F1 Score:  0.91
+- Accuracy Score:  0.9
+- Precision:  0.86
+- Recall:  0.96
+- F1 Score:  0.91
+
+As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly. Below, are confusion matrices for both classifiers. 
+
+![alt-text-1](/posts/guardrail/images/nn_1024_100_25_loss.png "title-1") ![alt-text-2](/posts/guardrail/images/nn_1024_100_25_loss.png "title-2")
 
 
-As you can see from the above results, neural network model outperformed LLM-based classifier quite significantly.
-
-## Limitations
-
+## Limitations and next steps
+To run Llama3.1 8B model I used Ollama framework, which is a lightweight framework for running LLMs on the local machine. Due to quantization, the model performance may have been significantly impacted. My next step is to run the same experiment with the full Llama3.1 model using AWS Bedrock. In addition, I plan to run the same experiment with LlamaGuard model.
 
 ## Conclusion
+
 
 ## 🔗 Code
 Can be found here
