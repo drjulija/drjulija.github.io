@@ -65,7 +65,7 @@ NeMo serves as an intermediary layer to enhance control and safety in LLM applic
 The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy and by how much.
 
 ## Methodology
-I evaluated the performance of three binary classifiers:
+I evaluated the performance of two binary classifiers:
 1. Llama3 8B with in-context-learning (ICL)
 2. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
 
@@ -83,7 +83,7 @@ For evaluating the performance of all three classifiers, I used the Test dataset
 
 ### Classifiers
 
-For the experiment, I set up 3 different classifiers: 
+For the experiment, I set up two different classifiers: 
 
 #### Llama3 8B with ICL
 I used Meta's Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such prompt.
@@ -155,7 +155,7 @@ class NeuralNet(nn.Module):
         return x
 ```
 
-For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
+For each data sample (user comment), I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
 
 I use Cross Entropy Loss and Stochastic Gradient Descent optimizaton. 
 
@@ -164,8 +164,6 @@ Below figure shows the training and validation loss for each epoch during traini
 {{< figure src="/posts/guardrail/images/nn_1024_100_25_loss.png" attr="Training and validation loss during Neural Network training" align=center target="_blank" >}}
 
 After the training, the performance of the neural network was evaluated on Test Dataset.
-
-Full code is accessible here.
 
 ## Results
 
@@ -228,4 +226,4 @@ These findings highlight that for tasks requiring high recall in content moderat
 Future work will involve testing a non-quantized version of Llama3.1 on AWS Bedrock to assess any improvements in performance. Additionally, exploring the LlamaGuard model and experimenting with more diverse training data and alternative architectures will help refine the neural network classifier further. 
 
 ## 🔗 Code
-Can be found here
+Full code can be found [here](https://github.com/drjulija/guardrails/tree/main?tab=readme-ov-file)
