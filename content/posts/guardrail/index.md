@@ -67,7 +67,7 @@ The goal of this work was to examine whether LLM-based toxic content classifiers
 ## Methodology
 I evaluated the performance of three binary classifiers:
 1. Llama3 8B with in-context-learning (ICL)
-2. Llama Guard 3 7B 
+2. GPT 3.5 Turbo with in-context-learning (ICL)
 3. Two Layer Neural Network - a feed-forward neural network trained on [Wikipedia Toxic Comments](https://huggingface.co/datasets/OxAISH-AL-LLM/wiki_toxic) training dataset.
 
 ### Dataset
@@ -87,7 +87,7 @@ For evaluating the performance of all three classifiers, I used the Test dataset
 For the experiment, I set up 3 different classifiers: 
 
 #### Llama3 8B with ICL
-I used Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such prompt.
+I used Meta's Llama3 model to classify toxic content using Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such prompt.
 
 
 ```python
@@ -118,6 +118,10 @@ Do not provide explanation or justification. If you can not provide the answer o
 I used Llama Guard 3 model to classify toxic content using Test Dataset. Because Llama Guard is already fine-tuned to perform a classification task, I did not provide any prompt to the model. Llama Guard outputs "safe" for non-toxic content or "unsafe" for toxic content together with representing category (refer to the [paper](https://arxiv.org/pdf/2312.06674) for more details).
 -->
 
+#### GPT 3.5 Turbo with ICL
+I used OpenAI's GPT 3.5 Turbo model to classify toxic content using Test Dataset. Same as per above, I used in-context-learning technique where LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If LLM can not return the answer or does not know, it should return 2. I used the same prompt (see above) in both Llama3 and GPT 3.5 classifiers.
+
+
 #### Feed-forward Neural Network
 I train a simple 2 layer neural network with the following architecture:
 - Input layer: 1024
@@ -125,8 +129,34 @@ I train a simple 2 layer neural network with the following architecture:
 - Hidden layer 2 (with dropout): 25
 - Output: 2
 
- For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
+Below code shows the neural network architecture
 
+```python
+class NeuralNet(nn.Module):
+    """
+    Feed forward Neural Network architecture
+    """
+    def __init__(self, input_size, hidden1, hidden2, output_size):
+        super(NeuralNet, self).__init__()
+        
+        self.input_size = input_size
+        self.hidden1 = hidden1
+        self.hidden2 = hidden2
+        self.output_size = output_size
+        
+        self.i2h = nn.Linear(self.input_size, self.hidden1)
+        self.h2h = nn.Linear(self.hidden1, self.hidden2)
+        self.h2o = nn.Linear(self.hidden2, self.output_size)
+        self.dropout = nn.Dropout(p=0.2)
+        
+    def forward(self, x):
+        x = F.relu(self.i2h(x))
+        x = F.relu(self.dropout(self.h2h(x)))
+        x = self.h2o(x)
+        return x
+```
+
+For each sample, I generated embeddings using the [mGTE](https://arxiv.org/pdf/2407.19669) sentence embedding model developed by Alibaba Group, which is accessible [here](https://arxiv.org/pdf/2407.19669).
 
 I use Cross Entropy Loss and Stochastic Gradient Descent optimizaton. 
 
@@ -138,7 +168,7 @@ After the training, the performance of the neural network was evaluated on Test 
 
 Full code is accessible here.
 
-## Evaluation
+## Results
 
 Here is the most interesting part.
 
