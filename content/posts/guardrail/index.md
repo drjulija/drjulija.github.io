@@ -216,7 +216,7 @@ In this scenario, the neural network model significantly outperformed the LLM-ba
 
 For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network with a recall rate of 0.96 would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
 
-When it comes to the speed, neural network took only 2.2 seconds to classify all 3,000 test samples, meanwhile LLM-based classifier took 4080 seconds. This is very important to consider when deploying such guardrails in a production environment. The neural network would offer faster processing speeds, taking a few mili-seconds per request, whereas the LLM requires approximately 2-3 seconds for each classification. 
+When it comes to the speed, the neural network took only 2.2 seconds to classify all 3,000 test samples, meanwhile the LLM-based classifier took 4080 seconds. This is very important to consider when deploying such guardrails in a production environment. The neural network would offer faster processing speeds, taking a few mili-seconds per request, whereas the LLM requires approximately 1-3 seconds for each classification. 
 
 However, it is worth noting that the neural network may not generalize as effectively to novel, unseen content, where the LLM could potentially offer an advantage.
 

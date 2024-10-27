@@ -82,7 +82,7 @@ params:
 
       - 🎓 I have a PhD in Machine Learning & NLP from [UCL](https://www.ucl.ac.uk/)
 
-      - 🛠 I lead engineering and product teams at [Networky.co](https://networky.events/)
+      - 🛠 I lead AI, Engineering and Product teams at [MiniMe AI](https://myminime.ai) and [Networky.co](https://networky.events/)
 
       - Get in touch with me 💌
     
@@ -94,8 +94,8 @@ params:
       url: "https://www.linkedin.com/in/julija-bainiaksina-phd-a906764a/"
     - name: twitter
       url: "https://twitter.com/dr_julija"
-    #- name: github
-    #  url: "https://github.com/drjulija"
+    - name: github
+      url: "https://github.com/drjulija"
 
   analytics:
     google:
