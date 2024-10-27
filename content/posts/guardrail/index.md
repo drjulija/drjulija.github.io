@@ -205,13 +205,13 @@ Below, are confusion matrices for both classifiers.
 In this scenario, the neural network model significantly outperformed the LLM-based classifier across all evaluation metrics. See the table summary below:
 
 
-| Metric    | **Llama3 7B with ICL** | **Neural Network** |
-| --------- | ---------------------- | ------------------ |
-| Accuracy  | 0.8                    | 0.9                |
-| Precision | 0.82                   | 0.86               |
-| Recall    | 0.78                   | 0.96               |
-| F1 Score  | 0.8                    | 0.91               | 
-| Time      | 4080 sec               | 2.2 sec            |
+| Metric     | **Llama3 7B with ICL**   | **Neural Network**   |
+| :--------- | :----------------------: | :------------------: |
+| Accuracy   | 0.8                      | 0.9                  |
+| Precision  | 0.82                     | 0.86                 |
+| Recall     | 0.78                     | 0.96                 |
+| F1 Score   | 0.8                      | 0.91                 | 
+| Time       | 4080 sec                 | 2.2 sec              |
 
 
 For a toxic content classification system, achieving a high recall rate is essential to ensure maximum detection of harmful content. Consequently, the neural network with a recall rate of 0.96 would be preferable to the LLM-based classifier, which achieved a recall rate of only 0.78.
