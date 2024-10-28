@@ -23,7 +23,7 @@ Another example is Meta’s Llama Guard, a Llama2-7B model developed by [Inan et
 
 In both approaches, LLMs are central to determining what qualifies as toxic content. However, this approach presents a reliability challenge – LLMs are not deterministic, meaning they can produce different outputs for the same input, which may impact consistency.
 
-🤔 This made me wonder: **Do LLM-based toxic content classifiers truly outperform traditional neural network classifiers in accuracy?**
+🤔 This made me wonder: **Do LLM-based toxic content classifiers truly outperform neural network classifiers in accuracy?**
 
 <!---
 1. Reliability – LLMs are not deterministic, meaning they can produce different outputs for the same input, which may impact consistency.
@@ -65,7 +65,7 @@ NeMo serves as an intermediary layer to enhance control and safety in LLM applic
 
 
 ## Objective
-The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass traditional neural network classifiers in terms of accuracy.
+The goal of this work was to examine whether LLM-based toxic content classifiers genuinely surpass neural network classifiers in terms of accuracy.
 
 ## Methodology
 I evaluated the performance of two binary classifiers:
@@ -89,7 +89,7 @@ For evaluating the performance of the classifiers, I used the Test dataset.
 For the experiment, I set up two different classifiers: 
 
 #### Llama3 8B with ICL
-I used Meta's Llama3 model to classify toxic content using the Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If the LLM can not return the answer or does not know, it should return 2. I used a similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such a prompt.
+I used Meta's Llama3 model to classify toxic content using the Test Dataset. Using in-context-learning the LLM is tasked to classify `user comment` as toxic or safe by returning 0 for "safe" or 1 for "toxic" content. If the LLM can not return the answer or does not know, it should return 2. I used a similar prompt structure and toxic content categories as per [Inan et al., 2023](https://arxiv.org/pdf/2312.06674) paper. Below is an example of such a prompt:
 
 
 ```python
@@ -222,9 +222,9 @@ runtime is quite long next step to fix efficiency and distilation could be an in
 -->
 
 ## Conclusion
-The objective of this experiment was to assess whether LLM-based toxic content classifiers offer advantages in accuracy over more traditional machine learning models, such as neural networks.
+The objective of this experiment was to assess whether LLM-based toxic content classifiers offer advantages in accuracy over other machine learning models, such as neural networks.
 
-This study compared the performance of a large language model (Llama3 8B with in-context learning) and a traditional two layer neural network classifier for detecting toxic content. Results indicate that the feed-forward neural network significantly outperformed the LLM-based classifier across key metrics, achieving an accuracy score of 0.9 and a recall rate of 0.96, while the LLM-based classifier achieved an accuracy of 0.8 and a recall of 0.78. These findings highlight that for tasks requiring high recall in content moderation, traditional neural network classifiers may provide superior performance with a reduced computational burden. 
+This study compared the performance of a large language model (Llama3 8B with in-context learning) and a two layer neural network classifier for detecting toxic content. Results indicate that the feed-forward neural network significantly outperformed the LLM-based classifier across key metrics, achieving an accuracy score of 0.9 and a recall rate of 0.96, while the LLM-based classifier achieved an accuracy of 0.8 and a recall of 0.78. These findings highlight that for tasks requiring high recall in content moderation, neural network classifiers may provide superior performance with a reduced computational burden. 
 
 <!---
 Furthermore, the neural network demonstrated faster inference times, making it a more suitable choice for real-time or high-volume production environments.
