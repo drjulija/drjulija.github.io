@@ -44,9 +44,9 @@ As LLMs become more widespread, the potential for misuse has grown, with risks r
 
 In simple terms, a guardrail is an algorithm that reviews the inputs and outputs of LLMs and determines whether they meet safety standards.
 
-For example, if a user’s input contains hate speech, a guardrail could either prevent the input from being processed by the LLM or adapt the output to ensure it remains harmless. In this way, guardrails intercept potentially harmful queries and help prevent models from responding inappropriately.
+For example, if a user’s input contains hate speech, a guardrail could either prevent the input from being processed by the LLM or adapt the output to ensure it remains harmless. In this way, Guardrails intercept potentially harmful queries and help prevent models from responding inappropriately.
 
-Depending on the application, guardrails can be customized to block various types of content, including offensive language, hate speech, hallucinations, or areas of high uncertainty. They also help ensure compliance with ethical guidelines and specific policies, such as fairness, privacy, or copyright protections [Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1).
+Depending on the application, Guardrails can be customized to block various types of content, including offensive language, hate speech, hallucinations, or areas of high uncertainty. They also help ensure compliance with ethical guidelines and specific policies, such as fairness, privacy, or copyright protections [Dong, Y. et al. 2024](https://arxiv.org/html/2402.01822v1).
 
 **Examples of Open-Source Guardrail Frameworks**
 
@@ -178,7 +178,7 @@ The neural network model significantly outperformed the LLM-based classifier acr
 <!---
 To classify 3,000 test samples it took me more than an hour. The neural network classified all 3,000 test samples and it took a few seconds. 
 -->
-See the table summary below:
+See the results in the table below:
 
 | Metric     | **Llama3 7B with ICL**   | **Neural Network**   |
 | :--------- | :----------------------: | :------------------: |
@@ -205,13 +205,13 @@ However, it is worth noting that the neural network may not generalize as effect
 -->
 
 ## Limitations and next steps
-To implement the Llama3.1 8B model, I utilized the Ollama framework, a streamlined tool for running LLMs on local machines. Due to quantization, model performance may have been significantly affected. As a next step, I plan to conduct the same experiment with the full Llama3.1 model on AWS Bedrock. Additionally, I plan to test the LlamaGuard model under similar conditions.
+To implement the Llama3.1 8B model, I utilized the Ollama framework, a streamlined tool for running LLMs on local machines. Due to quantization, model performance may have been significantly affected. As a next step, I plan to conduct the same experiment with the full Llama3.1 model on AWS Bedrock. Additionally, I plan to test the Llama Guard model under similar conditions.
 
 For further refinement, the neural network could be trained on a broader range of toxic content types, and alternative architectures and embedding models could be explored.
 
 In addition, I tried to run the same experiment with OpenAI’s GPT-3.5 API but after approximately 200 requests, the API returned an error citing "repetitive patterns in the prompt."
 
-Another important factor to consider is the efficiency of running the guardrails model in a production environment. On average, generating a single classification result takes approximately 2-3 seconds with both models. For the neural network model, the majority of this time 2-3 seconds is spent generating input embeddings, while the actual classification process itself takes only a few milliseconds.
+Another important factor to consider is the efficiency of running the Guardrails model in a production environment. On average, generating a single classification result takes approximately 2-3 seconds with both models. For the neural network model, the majority of this time 2-3 seconds is spent generating input embeddings, while the actual classification process itself takes only a few milliseconds.
 
 An additional 2-3 second delay could negatively impact the overall end-user experience. Therefore, the next step is to address the runtime issue by exploring distillation methods for the embedding model used alongside the neural network classifier.
 
@@ -230,7 +230,7 @@ This study compared the performance of a large language model (Llama3 8B with in
 Furthermore, the neural network demonstrated faster inference times, making it a more suitable choice for real-time or high-volume production environments.
 -->
 
-Future work will involve testing a non-quantized version of Llama3.1 on AWS Bedrock to assess any improvements in performance. Additionally, exploring the LlamaGuard model and experimenting with more diverse training data and alternative architectures will help refine the neural network classifier further. 
+Future work will involve testing a non-quantized version of Llama3.1 on AWS Bedrock to assess any improvements in performance. Additionally, exploring the Llama Guard model and experimenting with more diverse training data and alternative architectures will help refine the neural network classifier further. 
 
 While this experiment focused primarily on enhancing recall, the next objective will be to improve model efficiency. Specifically, I will explore distillation techniques for sentence embedding model to develop a more efficient student model suitable to run in a production environment.
 
